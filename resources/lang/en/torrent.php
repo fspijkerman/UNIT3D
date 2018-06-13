@@ -10,7 +10,6 @@ return [
     'approved' => 'Approved',
     'audio' => 'Audio',
     'bookmark' => 'Bookmark',
-    'bookmark' => 'Bookmark',
     'bookmarks' => 'Bookmarks',
     'bump' => 'Bump',
     'catalog' => 'Catalog',
