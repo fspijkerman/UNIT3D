@@ -219,6 +219,8 @@
                             {{-- Torrent Delete Modal --}}
                             <div class="modal fade" id="postdelete-{{ $post->id }}" tabindex="-1" role="dialog"
                                  aria-hidden="true">
+                                <form method="post" action="{{ route('delete') }}">
+                                    @csrf
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -228,7 +230,6 @@
                                             <h4 class="modal-title" id="myModalLabel">Delete Torrent: {{ $post->name }}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form method="post" action="{{ route('delete') }}">
                                                 <div class="form-group">
                                                     <input id="type" type="hidden" name="type"
                                                            value="{{ trans('torrent.torrent') }}">
@@ -254,7 +255,6 @@
                                                         <button class="btn btn-danger" type="submit">{{ trans('common.delete') }}</button>
                                                     </div>
                                                 </div>
-                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button class="btn btn-sm btn-default"
@@ -262,6 +262,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                             <!-- End Torrent Delete Modal -->
                         </td>
@@ -325,6 +326,8 @@
                             {{-- Torrent Postpone Modal --}}
                             <div class="modal fade" id="rejectpost-{{ $reject->id }}" tabindex="-1" role="dialog"
                                  aria-hidden="true">
+                                <form method="post" action="{{ route('moderation_postpone') }}">
+                                    @csrf
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -334,7 +337,6 @@
                                             <h4 class="modal-title" id="myModalLabel">Postpone Torrent: {{ $reject->name }}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form method="post" action="{{ route('moderation_postpone') }}">
                                                 <div class="form-group">
                                                     <input id="type" name="type" type="hidden"
                                                            value="{{ trans('torrent.torrent') }}">
@@ -352,7 +354,6 @@
                                                         <button class="btn btn-danger" type="submit">Postpone</button>
                                                     </div>
                                                 </div>
-                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button class="btn btn-sm btn-default" type="button"
@@ -360,6 +361,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                             <!-- End Torrent Postpone Modal -->
                         </td>
@@ -375,6 +377,8 @@
                             {{-- Torrent Delete Modal --}}
                             <div class="modal fade" id="rejectdelete-{{ $reject->id }}" tabindex="-1" role="dialog"
                                  aria-hidden="true">
+                                <form method="post" action=" {{ route('delete') }}">
+                                    @csrf
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -384,7 +388,7 @@
                                             <h4 class="modal-title" id="myModalLabel">Delete Torrent: {{ $reject->name }}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form method="post" action=" {{ route('delete') }}">
+
                                                 <div class="form-group">
                                                     <input id="type" type="hidden" name="type"
                                                            value="{{ trans('torrent.torrent') }}">
@@ -410,7 +414,6 @@
                                                         <button class="btn btn-danger" type="submit">{{ trans('common.delete') }}</button>
                                                     </div>
                                                 </div>
-                                            </form>
                                         </div>
                                         <div class="modal-footer">
                                             <button class="btn btn-sm btn-default" type="button"
@@ -418,6 +421,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                             <!-- End Torrent Delete Modal -->
                         </td>
