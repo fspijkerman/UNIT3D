@@ -66,15 +66,15 @@
                                  aria-hidden="true">
                                 <form method="post" action="{{ route('moderation_postpone') }}">
                                     @csrf
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="{{ trans('common.close') }}"><span aria-hidden="true">×</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Postpone Torrent: {{ $p->name }}</h4>
-                                        </div>
-                                        <div class="modal-body">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="{{ trans('common.close') }}"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Postpone Torrent: {{ $p->name }}</h4>
+                                            </div>
+                                            <div class="modal-body">
                                                 <div class="form-group">
                                                     <input id="type" name="type" type="hidden"
                                                            value="{{ trans('torrent.torrent') }}">
@@ -84,6 +84,60 @@
                                                            class="col-sm-2 control-label">{{ trans('common.reason') }}</label>
                                                     <div class="col-sm-10">
                                             <textarea title="Postpone message" class="form-control" rows="5" name="message" cols="50"
+                                                      id="message"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-10 col-sm-offset-2">
+                                                        <button class="btn btn-danger" type="submit">Postpone</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-sm btn-default"
+                                                        data-dismiss="modal">{{ trans('common.close') }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- End Torrent Postpone Modal -->
+                        </td>
+                        <td>
+                            <button data-target="#pendreject-{{ $p->id }}" data-toggle="modal"
+                                    class="btn btn-labeled btn-danger"><span class="btn-label"><i
+                                            class="fa fa-thumbs-down"></i></span>Reject
+                            </button>
+                            <!-- Torrent Reject Modal -->
+                            {{-- Torrent Reject Modal --}}
+                            <div class="modal fade" id="pendreject-{{ $p->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <form method="post" action="{{ route("moderation_reject") }}">
+                                    @csrf
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="{{ trans('common.close') }}"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Reject Torrent: {{ $p->name }}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input id="type" type="hidden" name="type"
+                                                           value="{{ trans('torrent.torrent') }}">
+                                                    <input id="id" type="hidden" name="id" value="{{ $p->id }}">
+                                                    <input id="slug" type="hidden" name="slug" value="{{ $p->slug }}">
+                                                    <label for="file_name" class="col-sm-2 control-label">Torrent</label>
+                                                    <div class="col-sm-10">
+                                                        <label id="title" name="title" type="hidden">{{ $p->name }}</label>
+                                                        <p class="form-control-static">{{ $p->name }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="report_reason"
+                                                           class="col-sm-2 control-label">{{ trans('common.reason') }}</label>
+                                                    <div class="col-sm-10">
+                                            <textarea title="Rejection Message" class="form-control" rows="5" name="message" cols="50"
                                                       id="message"></textarea>
                                                     </div>
                                                 </div>

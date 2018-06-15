@@ -353,6 +353,10 @@ Route::group(['middleware' => 'language'], function () {
         // Like - Dislike System
         Route::any('/like/post/{postId}', 'ForumController@likePost')->name('like');
         Route::any('/dislike/post/{postId}', 'ForumController@dislikePost')->name('dislike');
+
+        // Subscription System
+        Route::get('/subscribe/{topic}', 'SubscriptionController@subscribe')->name('subscribe');
+        Route::get('/unsubscribe/{topic}', 'SubscriptionController@unsubscribe')->name('unsubscribe');
     });
 
 
