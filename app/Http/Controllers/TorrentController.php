@@ -807,7 +807,7 @@ class TorrentController extends Controller
         }
 
         // User's download rights are revoked
-        if ($user->can_download == 0) {
+        if ($user->can_download == 0 && $torrent->user_id != $user->id) {
             return redirect()->route('torrent', ['slug' => $torrent->slug, 'id' => $torrent->id])
                 ->with(Toastr::error('Your Download Rights Have Been Revoked!!!', 'Whoops!', ['options']));
         }
@@ -844,7 +844,7 @@ class TorrentController extends Controller
 
         $fileToDownload = Bencode::bencode($dict);
         file_put_contents(getcwd() . '/files/tmp/' . $tmpFileName, $fileToDownload);
-        return response()->download(getcwd() . '/files/tmp/' . $tmpFileName);
+        return response()->download(getcwd() . '/files/tmp/' . $tmpFileName)->deleteFileAfterSend(true);
     }
 
     /**

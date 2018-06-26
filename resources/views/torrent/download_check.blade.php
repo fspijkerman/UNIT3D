@@ -17,7 +17,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('download_check', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}" itemprop="url"
+        <a href="{{ route('download_check', ['slug' => $torrent->slug, 'id' => $torrent->id]) }}" itemprop="url"
            class="l-breadcrumb-item-link">
             <span itemprop="title" class="l-breadcrumb-item-link-title">{{ trans('torrent.download-check') }}</span>
         </a>
@@ -72,7 +72,7 @@
                             class="fa fa-check"></i> {{ strtoupper(trans('torrent.passed')) }}</span>
                 @endif
                 <strong>Download Rights Active: </strong>
-                @if($user->can_download == 0)<span class="badge-extra text-red"><i
+                @if($user->can_download == 0 && $torrent->user_id != $user->id)<span class="badge-extra text-red"><i
                             class="fa fa-times"></i> {{ strtoupper(trans('torrent.failed')) }}</span>
                 @else<span class="badge-extra text-green"><i
                             class="fa fa-check"></i> {{ strtoupper(trans('torrent.passed')) }}</span>
@@ -88,10 +88,10 @@
             </div>
             <br>
             <div class="text-center">
-                @if($user->getRatio() < config('other.ratio') || $user->can_download == 0)
+                @if($user->getRatio() < config('other.ratio') || $user->can_download == 0 && $torrent->user_id != $user->id)
                     <span class="text-red text-bold">{{ trans('torrent.no-privileges-desc') }}</span>
                 @else
-                    <a href="{{ route('download', array('slug' => $torrent->slug, 'id' => $torrent->id)) }}"
+                    <a href="{{ route('download', ['slug' => $torrent->slug, 'id' => $torrent->id]) }}"
                        role="button" class="btn btn-labeled btn-primary">
                         <span class='btn-label'><i class='fa fa-download'></i></span>{{ trans('common.download') }}</a>
                 @endif

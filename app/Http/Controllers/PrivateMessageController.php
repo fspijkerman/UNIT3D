@@ -74,7 +74,7 @@ class PrivateMessageController extends Controller
         $pm = PrivateMessage::where('id', $id)->firstOrFail();
 
         if($pm->sender_id == $user->id || $pm->receiver_id == $user->id) {
-            if ($user->id === $pm->reciever_id && $pm->read === 0) {
+            if ($user->id === $pm->receiver_id && $pm->read === 0) {
                 $pm->read = 1;
                 $pm->save();
             }
@@ -129,7 +129,7 @@ class PrivateMessageController extends Controller
         ]);
 
         if ($v->fails()) {
-            return redirect()->route('create', ['receiver_id' => '', 'username' => ''])
+            return redirect()->route('create', ['username' => auth()->user()->username, 'id' => auth()->user()->id])
                 ->with(Toastr::error($v->errors()->toJson(), 'Whoops!', ['options']));
         } else {
             $pm->save();
