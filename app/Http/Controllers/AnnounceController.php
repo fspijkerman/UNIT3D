@@ -25,11 +25,12 @@ use Illuminate\Http\Request;
 class AnnounceController extends Controller
 {
     /**
-    * Announce Code
-    *
-    * @param $passkey
-    * @return Bencoded response for the torrent client
-    */
+     * Announce Code
+     *
+     * @param Request $request
+     * @param $passkey
+     * @return Bencoded response for the torrent client
+     */
     public function announce(Request $request, $passkey)
     {
         $this->checkRequestType();
@@ -167,30 +168,19 @@ class AnnounceController extends Controller
             return response(Bencode::bencode(['failure reason' => 'Torrent has been rejected']), 200, ['Content-Type' => 'text/plain']);
         }
 
-        $peers = Peer::where('info_hash', $info_hash)->take(100)->get()->toArray();
+        $peers = Peer::select('peer_id','ip','port','left')->where('info_hash', $info_hash)->take(100)->get()->toArray();
         $seeders = 0;
         $leechers = 0;
 
         foreach ($peers as &$p) {
             if ($p['left'] > 0) {
-                $leechers++; // Counts the number of leechers
+                ++$leechers; // Counts the number of leechers
             } else {
-                $seeders++; // Counts the number of seeders
+                ++$seeders; // Counts the number of seeders
             }
 
             unset(
-                $p['id'],
-                $p['md5_peer_id'],
-                $p['info_hash'],
-                $p['agent'],
-                $p['uploaded'],
-                $p['downloaded'],
-                $p['left'],
-                $p['torrent_id'],
-                $p['user_id'],
-                $p['seeder'],
-                $p['created_at'],
-                $p['updated_at']
+                $p['left']
             );
         }
 
@@ -221,7 +211,7 @@ class AnnounceController extends Controller
         }
 
         // Get history information
-        $history = History::where("info_hash", $info_hash)->where("user_id", $user->id)->first();
+        $history = History::where('info_hash', $info_hash)->where("user_id", $user->id)->first();
 
         if (!$history) {
             $history = new History();
