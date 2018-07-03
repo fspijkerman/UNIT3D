@@ -266,6 +266,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/poll/{slug}/result', 'PollController@result')->name('poll_results');
 
         // Graveyard System
+        Route::get('/filterGraveyard', 'GraveyardController@faceted');
         Route::get('/graveyard', 'GraveyardController@index')->name('graveyard');
         Route::post('/graveyard/{id}', 'GraveyardController@resurrect')->name('resurrect');
 
@@ -501,5 +502,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/backup/create', 'BackupController@create');
         Route::get('/backup/download/{file_name?}', 'BackupController@download');
         Route::post('/backup/delete/{file_name?}', 'BackupController@delete')->where('file_name', '(.*)');
+
+        // Mass Validate Users
+        Route::get('/massValidateUsers', 'UserController@massValidateUsers')->name('massValidateUsers');
     });
 });
