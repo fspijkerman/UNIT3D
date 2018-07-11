@@ -29,7 +29,7 @@
                 <input type="text" name="username" id="username" size="25" placeholder="{{ trans('user.search') }}"
                        class="form-control" style="float:right;">
             </form>
-            <table class="table table-bordered table-hover">
+            <table class="table table-condensed table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>{{ trans('user.image') }}</th>
@@ -60,8 +60,7 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="col-md-12">
+        <div class="text-center">
             {{ $users->links() }}
         </div>
     </div>

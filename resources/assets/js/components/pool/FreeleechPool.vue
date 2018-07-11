@@ -24,13 +24,13 @@
             PoolForm,
             PoolTable
         },
-        data: {
+        data: function()  {
             show: false
         }
 
     }
 </script>
 
-<style lang="scss">
+<style scoped>
 
 </style>

@@ -7,53 +7,42 @@
  *
  * @project    UNIT3D
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
- * @author     Ryuu
+ * @author     HDVinnie
  */
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Download Check Page
+    | Enable
     |--------------------------------------------------------------------------
     |
-    | Weather Or Not User Will Be Stopped At Download Check Page Or Not
+    | whitelist = allow / blacklist = block / disabled = null
     |
     */
 
-    'download_check_page' => 0,
+    'enabled' => 'null',
 
     /*
     |--------------------------------------------------------------------------
-    | Source Value
+    | Blacklist
     |--------------------------------------------------------------------------
     |
-    | Torrent Source Value
+    | Domains you want to block e.g mailinator.com
     |
     */
-
-    'source' => 'UNIT3D',
+    'block' => [
+        //
+    ],
 
     /*
     |--------------------------------------------------------------------------
-    | Created By
+    | Whitelist
     |--------------------------------------------------------------------------
     |
-    | Created By Value
+    | Domains you want to allow e.g gmail.com
     |
     */
-
-    'created_by' => 'Edited by UNIT3D',
-    'created_by_append' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Comment
-    |--------------------------------------------------------------------------
-    |
-    | Comment Value
-    |
-    */
-
-    'comment' => "This torrent was downloaded from UNIT3D",
+    'allow' => [
+        //
+    ],
 ];
