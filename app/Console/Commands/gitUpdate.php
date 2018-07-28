@@ -113,7 +113,8 @@ class gitUpdate extends Command
         $this->info('Backing up some stuff ...');
 
         $this->process([
-            'rm -rf ' . storage_path('gitupdate') . DIRECTORY_SEPARATOR . '*',
+            'rm -rf ' . storage_path('gitupdate'),
+            'mkdir ' .storage_path('gitupdate'),
             'mkdir ' .storage_path('gitupdate') . DIRECTORY_SEPARATOR . 'public',
             'mkdir ' .storage_path('gitupdate') . DIRECTORY_SEPARATOR . 'resources',
             'mkdir ' .storage_path('gitupdate') . DIRECTORY_SEPARATOR . 'resources/views',
