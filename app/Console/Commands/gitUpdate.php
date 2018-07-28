@@ -13,13 +13,22 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 class gitUpdate extends Command
 {
+    /**
+     * @var SymfonyStyle $io
+     */
+    protected $io;
+
     /**
      * The copy command
      */
@@ -69,6 +78,11 @@ class gitUpdate extends Command
      */
     public function handle()
     {
+        $this->input = new ArgvInput();
+        $this->output = new ConsoleOutput();
+
+        $this->io = new SymfonyStyle($this->input, $this->output);
+
         $this->info('
         *********************************
         * Git Updater v2.0 by Poppabear *
@@ -132,6 +146,7 @@ class gitUpdate extends Command
         $this->info('Updating to be current with remote repository ...');
 
         $commands = [
+            'git stash',
             'git checkout master',
             'git fetch origin',
             'git reset --hard origin/master',
@@ -190,20 +205,58 @@ class gitUpdate extends Command
     private function process(array $commands)
     {
         foreach ($commands as $command) {
-            $process = new Process($command);
 
-            $process->setTimeout(150);
+            $this->io->writeln("<fg=cyan>$command</>");
+
+            $process = new Process($command);
+            $bar = $this->progressStart();
+            $process->setTimeout(3600);
 
             $process->start();
 
             try {
-                $process->wait(function ($type, $buffer) {
+                $process->wait(function ($type, $buffer) use ($bar) {
+                    $bar->advance();
                     $this->warn($buffer);
                 });
             } catch (RuntimeException $e) {
                 $this->error("'{$command}' timed out. Please run manually!");
             }
+
+            if (!$process->isSuccessful()) {
+                $this->error($process->getErrorOutput());
+            }
+
+            $this->progressStop($bar);
+            $process->stop();
+
+            echo "\n\n";
+            $this->warn($process->getOutput());
         }
+    }
+
+    /**
+     * @return ProgressBar
+     */
+    protected function progressStart()
+    {
+        $bar = $this->io->createProgressBar();
+        $bar->setBarCharacter('<fg=magenta>=</>');
+        $bar->setFormat('[%bar%] (<fg=cyan>%message%</>)');
+        $bar->setMessage('Please Wait ...');
+        //$bar->setRedrawFrequency(20); todo: may be useful for platforms like CentOS
+        $bar->start();
+
+        return $bar;
+    }
+
+    /**
+     * @param $bar
+     */
+    protected function progressStop(ProgressBar $bar)
+    {
+        $bar->setMessage("<fg=green>Done!</>");
+        $bar->finish();
     }
 
     /**
