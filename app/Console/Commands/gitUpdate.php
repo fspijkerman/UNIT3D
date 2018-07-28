@@ -216,11 +216,10 @@ class gitUpdate extends Command
 
             while($process->isRunning()) {
                 $bar->advance();
+                sleep(2);
 
                 try {
-                    $process->wait(function ($type, $buffer) use ($bar) {
-                        $this->warn($buffer);
-                    });
+                    $process->checkTimeout();
                 } catch (RuntimeException $e) {
                     $this->error("'{$command}' timed out. Please run manually!");
                 }
