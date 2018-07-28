@@ -193,12 +193,12 @@ class gitUpdate extends Command
 
             $process->setTimeout(150);
 
-            $process->run(function ($type, $buffer) {
-                $this->warn(($type == Process::ERR ? 'Type Error >> ' : '') . $buffer);
-            });
+            $process->start();
 
             try {
-                $process->wait();
+                $process->wait(function ($type, $buffer) {
+                    $this->warn($buffer);
+                });
             } catch (RuntimeException $e) {
                 $this->error("'{$command}' timed out. Please run manually!");
             }
