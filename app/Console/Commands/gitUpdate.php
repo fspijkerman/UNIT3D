@@ -194,11 +194,7 @@ class gitUpdate extends Command
             $process->setTimeout(150);
 
             $process->run(function ($type, $buffer) {
-                if (Process::ERR === $type) {
-                    $this->error('ERR > ' . $buffer);
-                } else {
-                    $this->warn($buffer);
-                }
+                $this->warn(($type == Process::ERR ? 'Type Error >> ' : '') . $buffer);
             });
 
             try {
